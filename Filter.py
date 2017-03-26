@@ -298,21 +298,17 @@ while True:
 
 
     if 1:           #Change to '0' to stop showing the angles from the accelerometer
-        #print ("\033[ACCX Angle %5.2f ACCY Angle %5.2f  \033[0m  " % (AccXangle, AccYangle)),
         print(str(AccXangle)+","+str(AccYangle)+","),
 
     if 1:           #Change to '0' to stop  showing the angles from the gyro
-        #print ("\033[1;31;40m\tGRYX Angle %5.2f  GYRY Angle %5.2f  GYRZ Angle %5.2f" % (gyroXangle,gyroYangle,gyroZangle)),
         print(str(gyroXangle)+","+str(gyroYangle)+","+str(gyroZangle)+","),
 
     if 1:           #Change to '0' to stop  showing the angles from the complementary filter
-        #print ("\033[1;35;40m   \tCFangleX Angle %5.2f \033[1;36;40m  CFangleY Angle %5.2f \33[1;32;40m" % (CFangleX,CFangleY)),
         print(str(CFangleX)+","+str(CFangleY)+","),
     if 1:
         print(str(heading)+","+str(tiltCompensatedHeading)+","),
     if 1:
         print(str(kalmanX)+","+str(kalmanY))
 
-    #slow program down a bit, makes the output more readable
     time.sleep(0.03)
 
