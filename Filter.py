@@ -1,6 +1,4 @@
 #!/usr/bin/python
-
-import Adafruit_BMP.BMP085 as BMP085
 import time
 import Adafruit_ADXL345
 import math
@@ -120,11 +118,6 @@ i2c_bus.write_byte_data(i2c_address,0x23,0x20)
 
 #accaleration
 accel = Adafruit_ADXL345.ADXL345()
-
-
-
-#BMP085
-sensor = BMP085.BMP085()
 
 #GYRO
 bus = smbus.SMBus(1)
