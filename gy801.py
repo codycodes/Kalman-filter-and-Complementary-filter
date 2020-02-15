@@ -267,7 +267,7 @@ class ADXL345(IMU):
 		return self.roll
 	
 	def getGravForce(self, rx, ry, rz):
-		return sqrt(rx**2 + ry**2 + rz**z)
+		return sqrt(rx**2 + ry**2 + rz**2)
 		
 
 class L3G4200D(IMU):
