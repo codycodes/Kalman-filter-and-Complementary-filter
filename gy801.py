@@ -265,6 +265,10 @@ class ADXL345(IMU):
 		aZ = self.getZg()
 		self.roll = atan2(aY,(sqrt(aX*aX+aZ*aZ))) * 180.0/pi
 		return self.roll
+	
+	def getGravForce(self, rx, ry, rz):
+		return sqrt(rx**2 + ry**2 + rz**2)
+		
 
 class L3G4200D(IMU):
 	
@@ -503,12 +507,27 @@ if __name__ == "__main__":
 	print ("   x = %.3fG" % ( adxl345.Xg ))
 	print ("   y = %.3fG" % ( adxl345.Yg ))
 	print ("   z = %.3fG" % ( adxl345.Zg ))
+	gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
+	print('grav Force: ' + str(gravForce))
+	print("    Ax = %.3f deg") % (acos(adxl345.Xg/gravForce))
+	print("    Ay = %.3f deg") % (acos(adxl345.Yg/gravForce))
+	print("    Az = %.3f deg") % (acos(adxl345.Zg/gravForce))
 	print ("   x = %.3f" % ( adxl345.Xraw ))
 	print ("   y = %.3f" % ( adxl345.Yraw ))
 	print ("   z = %.3f" % ( adxl345.Zraw ))
 	print ("   pitch = %.3f" % ( adxl345.getPitch() ))
 	print ("   roll = %.3f" % ( adxl345.getRoll() ))
 
+	while True:
+		adxl345.getX()
+		adxl345.getY()
+		adxl345.getZ()
+		gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
+		print('grav Force: ' + str(gravForce))
+		print("    Ax = %.1f deg") % (acos(adxl345.Xg/gravForce) * (180.0 / pi))
+		print("    Ay = %.1f deg") % (acos(adxl345.Yg/gravForce) * (180.0 / pi))
+		print("    Az = %.1f deg") % (acos(adxl345.Zg/gravForce) * (180.0 / pi))
+		time.sleep(.1)
 	# gyro = sensors.gyro
 	
 	# gyro.getXangle()
