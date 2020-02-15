@@ -499,8 +499,6 @@ if __name__ == "__main__":
 	
 	sensors = gy801()
 	adxl345 = sensors.accel
-	gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
-	print('grav Force ' + str(gravForce))
 	
 	print ("\033[1;34;40mADXL345 on address 0x%x:" % (ADXL345_ADDRESS))
 	print ("   x = %.3f m/s2" % ( adxl345.getX() ))
@@ -509,6 +507,8 @@ if __name__ == "__main__":
 	print ("   x = %.3fG" % ( adxl345.Xg ))
 	print ("   y = %.3fG" % ( adxl345.Yg ))
 	print ("   z = %.3fG" % ( adxl345.Zg ))
+	gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
+	print('grav Force: ' + str(gravForce))
 	print("    Ax = %.3f deg") % (acos(adxl345.Xg/gravForce))
 	print("    Ay = %.3f deg") % (acos(adxl345.Yg/gravForce))
 	print("    Az = %.3f deg") % (acos(adxl345.Zg/gravForce))
