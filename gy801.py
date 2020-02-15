@@ -265,6 +265,10 @@ class ADXL345(IMU):
 		aZ = self.getZg()
 		self.roll = atan2(aY,(sqrt(aX*aX+aZ*aZ))) * 180.0/pi
 		return self.roll
+	
+	def getGravForce(self, rx, ry, rz):
+		return sqrt(rx**2 + ry**2 + rz**z)
+		
 
 class L3G4200D(IMU):
 	
@@ -495,6 +499,8 @@ if __name__ == "__main__":
 	
 	sensors = gy801()
 	adxl345 = sensors.accel
+	gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
+	print('grav Force ' + str(gravForce))
 	
 	print ("\033[1;34;40mADXL345 on address 0x%x:" % (ADXL345_ADDRESS))
 	print ("   x = %.3f m/s2" % ( adxl345.getX() ))
@@ -503,12 +509,14 @@ if __name__ == "__main__":
 	print ("   x = %.3fG" % ( adxl345.Xg ))
 	print ("   y = %.3fG" % ( adxl345.Yg ))
 	print ("   z = %.3fG" % ( adxl345.Zg ))
+	print("    Ax = %.3f deg") % (acos(adxl345.Xg/gravForce))
+	print("    Ay = %.3f deg") % (acos(adxl345.Yg/gravForce))
+	print("    Az = %.3f deg") % (acos(adxl345.Zg/gravForce))
 	print ("   x = %.3f" % ( adxl345.Xraw ))
 	print ("   y = %.3f" % ( adxl345.Yraw ))
 	print ("   z = %.3f" % ( adxl345.Zraw ))
 	print ("   pitch = %.3f" % ( adxl345.getPitch() ))
 	print ("   roll = %.3f" % ( adxl345.getRoll() ))
-
 	# gyro = sensors.gyro
 	
 	# gyro.getXangle()
