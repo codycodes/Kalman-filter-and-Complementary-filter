@@ -517,6 +517,17 @@ if __name__ == "__main__":
 	print ("   z = %.3f" % ( adxl345.Zraw ))
 	print ("   pitch = %.3f" % ( adxl345.getPitch() ))
 	print ("   roll = %.3f" % ( adxl345.getRoll() ))
+
+	while True:
+		adxl345.getX()
+		adxl345.getY()
+		adxl345.getZ()
+		gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
+		print('grav Force: ' + str(gravForce))
+		print("    Ax = %.3f deg") % (acos(adxl345.Xg/gravForce))
+		print("    Ay = %.3f deg") % (acos(adxl345.Yg/gravForce))
+		print("    Az = %.3f deg") % (acos(adxl345.Zg/gravForce))
+		time.sleep(.1)
 	# gyro = sensors.gyro
 	
 	# gyro.getXangle()
