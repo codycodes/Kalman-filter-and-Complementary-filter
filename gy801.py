@@ -524,9 +524,9 @@ if __name__ == "__main__":
 		adxl345.getZ()
 		gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
 		print('grav Force: ' + str(gravForce))
-		print("    Ax = %.3f deg") % (acos(adxl345.Xg/gravForce))
-		print("    Ay = %.3f deg") % (acos(adxl345.Yg/gravForce))
-		print("    Az = %.3f deg") % (acos(adxl345.Zg/gravForce))
+		print("    Ax = %.1f deg") % (acos(adxl345.Xg/gravForce) * (180.0 / pi))
+		print("    Ay = %.1f deg") % (acos(adxl345.Yg/gravForce) * (180.0 / pi))
+		print("    Az = %.1f deg") % (acos(adxl345.Zg/gravForce) * (180.0 / pi))
 		time.sleep(.1)
 	# gyro = sensors.gyro
 	
