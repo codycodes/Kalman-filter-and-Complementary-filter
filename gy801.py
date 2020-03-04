@@ -499,6 +499,7 @@ if __name__ == "__main__":
 	
 	sensors = gy801()
 	adxl345 = sensors.accel
+	gyro = sensors.gyro
 	
 	print ("\033[1;34;40mADXL345 on address 0x%x:" % (ADXL345_ADDRESS))
 	print ("   x = %.3f m/s2" % ( adxl345.getX() ))
@@ -517,24 +518,46 @@ if __name__ == "__main__":
 	print ("   z = %.3f" % ( adxl345.Zraw ))
 	print ("   pitch = %.3f" % ( adxl345.getPitch() ))
 	print ("   roll = %.3f" % ( adxl345.getRoll() ))
-
+        position = ''
 	while True:
 		adxl345.getX()
 		adxl345.getY()
 		adxl345.getZ()
+		gyro.getXangle()
+		gyro.getYangle()
+		gyro.getZangle()
 		gravForce = adxl345.getGravForce(adxl345.Xg, adxl345.Yg, adxl345.Zg)
-		print('grav Force: ' + str(gravForce))
-		print("    Ax = %.1f deg") % (acos(adxl345.Xg/gravForce) * (180.0 / pi))
-		print("    Ay = %.1f deg") % (acos(adxl345.Yg/gravForce) * (180.0 / pi))
-		print("    Az = %.1f deg") % (acos(adxl345.Zg/gravForce) * (180.0 / pi))
+		#print('grav Force: ' + str(gravForce))
+		#print("    Ax = %.1f deg") % (acos(adxl345.Xg/gravForce) * (180.0 / pi))
+		#print("    Ay = %.1f deg") % (acos(adxl345.Yg/gravForce) * (180.0 / pi))
+		#print("    Az = %.1f deg") % (acos(adxl345.Zg/gravForce) * (180.0 / pi))
+		x = (acos(adxl345.Xg/gravForce) * (180.0 / pi))
+		y = (acos(adxl345.Yg/gravForce) * (180.0 / pi))        
+		z = (acos(adxl345.Zg/gravForce) * (180.0 / pi))
+                #print ("   pitch = %.3f" % ( adxl345.getPitch() ))
+		#print ("   roll = %.3f" % ( adxl345.getRoll() ))
+                #position = 'unknown'
+                #r = adxl345.getRoll()
+                changed = False
+                if (adxl345.getRoll() > 60):
+                    changed = (position != 'left')
+                    position = 'left'
+                elif (adxl345.getRoll() < -60):
+                    changed = (position != 'right')
+                    position = 'right'
+                elif (z <= 90 and position != 'prone (front)'):
+                    position = 'prone (front)'
+                    changed = True
+                elif (z > 90 and position != 'supine (back)'):
+                    changed = True
+                    position = 'supine (back)'
+                if changed:
+                    print(position) 
+		# gyro
+		#print('~~ gyro ~~')
+		#print ("   Xangle = %.3f deg" % ( gyro.getXangle() ))
+		#print ("   Yangle = %.3f deg" % ( gyro.getYangle() ))
+		#print ("   Zangle = %.3f deg" % ( gyro.getZangle() ))
 		time.sleep(.1)
-	# gyro = sensors.gyro
-	
-	# gyro.getXangle()
-	# gyro.getYangle()
-	# gyro.getZangle()
-    
+		
 	# print ("\033[1;33;40mL3G4200D on address 0x%x:" % (L3G4200D_ADDRESS))
-	# print ("   Xangle = %.3f deg" % ( gyro.getXangle() ))
-	# print ("   Yangle = %.3f deg" % ( gyro.getYangle() ))
-	# print ("   Zangle = %.3f deg" % ( gyro.getZangle() ))
